@@ -1,36 +1,32 @@
 function LandingGameCard({ game, onSelect }) {
   return (
     <article
-      className="relative min-h-[420px] overflow-hidden rounded-[1.8rem] border border-white/10 shadow-[0_18px_40px_rgba(0,0,0,0.32)]"
+      className="group relative min-h-[420px] overflow-hidden rounded-[28px] border border-[#3a2d23] shadow-[0_18px_40px_rgba(0,0,0,0.32)] transition duration-300 hover:-translate-y-1 hover:border-[#5b4434]"
       style={{
         backgroundImage: `url(${game.imagen})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(29,26,21,0.16),rgba(29,26,21,0.68)_58%,rgba(29,26,21,0.96))]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(9,6,4,0.18)_0%,rgba(9,6,4,0.52)_38%,rgba(9,6,4,0.94)_100%)]" />
 
       <div className="relative z-10 flex h-full flex-col justify-between p-6">
         <div className="flex justify-end">
-          <span className="rounded-full border border-primary/20 bg-primary/35 px-3 py-2 text-xs font-bold uppercase tracking-[0.16em] text-black">
-            {game.Genero}
-          </span>
-        </div>  
+          <span className="app-pill">{game.Genero}</span>
+        </div>
 
         <div>
-          <h4 className="text-3xl font-black leading-tight tracking-tight">
-            {game.nombre} 
+          <h4 className="text-3xl font-medium leading-tight tracking-tight text-[#f4ece0]">
+            {game.nombre}
           </h4>
 
-          <p className="mt-4 text-sm leading-7 text-slate-200">
-            {game.descripcion}
-          </p>
+          <p className="mt-4 text-sm leading-7 text-[#d0beab]">{game.descripcion}</p>
 
           <button
-            className="mt-6 w-full rounded-full border border-primary/20 bg-primary/10 px-4 py-3 font-bold text-primary transition hover:-translate-y-0.5 hover:border-primary/40 hover:bg-primary/15"
+            className="app-button-secondary mt-6 w-full"
             onClick={() => onSelect(game)}
           >
-            Más información
+            Mas informacion
           </button>
         </div>
       </div>

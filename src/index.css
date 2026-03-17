@@ -1,12 +1,157 @@
 @import "tailwindcss";
 @config "../tailwind.config.js";
 
-body {
-  background-color: #000000;
+:root {
+  color-scheme: dark;
+  --app-bg: #090604;
+  --app-bg-soft: #110c09;
+  --app-panel: rgba(20, 14, 11, 0.82);
+  --app-panel-strong: rgba(15, 10, 8, 0.94);
+  --app-panel-border: rgba(86, 64, 47, 0.45);
+  --app-panel-border-soft: rgba(255, 255, 255, 0.08);
+  --app-text: #f3eadf;
+  --app-text-muted: #b9a18a;
+  --app-text-soft: #8f7a67;
+  --app-accent: #ead3ac;
+  --app-accent-strong: #f3dfbd;
+  --app-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
 }
 
-.glass-panel {
-  background: rgba(15, 15, 15, 0.6);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(244, 175, 37, 0.1);
+html {
+  min-height: 100%;
+  background: var(--app-bg);
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--app-text);
+  background:
+    radial-gradient(circle at 15% 18%, rgba(138, 85, 37, 0.2), transparent 20%),
+    radial-gradient(circle at 84% 16%, rgba(198, 160, 110, 0.08), transparent 16%),
+    radial-gradient(circle at 50% 100%, rgba(65, 39, 19, 0.28), transparent 30%),
+    linear-gradient(180deg, #120c09 0%, #090604 42%, #060303 100%);
+  font-family: Inter, system-ui, sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(circle at center, black 32%, transparent 100%);
+  opacity: 0.42;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgba(234, 211, 172, 0.28);
+  color: #fff7eb;
+}
+
+@layer components {
+  .app-shell {
+    @apply relative min-h-screen overflow-x-hidden text-[color:var(--app-text)];
+  }
+
+  .app-panel {
+    background: linear-gradient(180deg, rgba(24, 17, 13, 0.96) 0%, rgba(14, 9, 7, 0.92) 100%);
+    border: 1px solid var(--app-panel-border);
+    box-shadow: var(--app-shadow);
+    @apply rounded-[28px] backdrop-blur-xl;
+  }
+
+  .app-panel-soft {
+    background: var(--app-panel);
+    border: 1px solid var(--app-panel-border-soft);
+    @apply rounded-[22px] backdrop-blur-md;
+  }
+
+  .app-kicker {
+    @apply text-[11px] font-semibold uppercase tracking-[0.28em];
+    color: var(--app-text-muted);
+  }
+
+  .app-title {
+    @apply font-light tracking-tight;
+    color: var(--app-text);
+  }
+
+  .app-copy {
+    color: var(--app-text-muted);
+  }
+
+  .app-input {
+    background: rgba(16, 11, 8, 0.88);
+    border: 1px solid rgba(94, 70, 52, 0.5);
+    color: var(--app-text);
+    @apply block w-full rounded-2xl px-4 py-3.5 outline-none transition;
+  }
+
+  .app-input::placeholder {
+    color: var(--app-text-soft);
+  }
+
+  .app-input:focus {
+    border-color: rgba(234, 211, 172, 0.55);
+    box-shadow: 0 0 0 4px rgba(234, 211, 172, 0.08);
+  }
+
+  .app-textarea {
+    background: rgba(16, 11, 8, 0.88);
+    border: 1px solid rgba(94, 70, 52, 0.5);
+    color: var(--app-text);
+    @apply block min-h-32 w-full resize-none rounded-2xl px-4 py-3.5 outline-none transition;
+  }
+
+  .app-textarea::placeholder {
+    color: var(--app-text-soft);
+  }
+
+  .app-textarea:focus {
+    border-color: rgba(234, 211, 172, 0.55);
+    box-shadow: 0 0 0 4px rgba(234, 211, 172, 0.08);
+  }
+
+  .app-button-primary {
+    background: linear-gradient(180deg, var(--app-accent) 0%, #d9bb8c 100%);
+    color: #241710;
+    @apply inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-semibold transition;
+  }
+
+  .app-button-primary:hover {
+    background: linear-gradient(180deg, var(--app-accent-strong) 0%, #e2c79a 100%);
+    transform: translateY(-1px);
+  }
+
+  .app-button-secondary {
+    background: rgba(22, 16, 12, 0.9);
+    border: 1px solid rgba(94, 70, 52, 0.5);
+    color: var(--app-text);
+    @apply inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-semibold transition;
+  }
+
+  .app-button-secondary:hover {
+    background: rgba(31, 22, 17, 0.94);
+    border-color: rgba(132, 99, 74, 0.65);
+  }
+
+  .app-pill {
+    @apply inline-flex rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em];
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    background: rgba(20, 15, 13, 0.84);
+    color: #d8c3a6;
+  }
+
+  .app-backdrop {
+    background: rgba(4, 3, 3, 0.72);
+    @apply fixed inset-0 z-50 flex items-center justify-center p-6 backdrop-blur-md;
+  }
 }

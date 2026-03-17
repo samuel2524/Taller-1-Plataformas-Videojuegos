@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { EditarJuego } from "../../Services/VideoJuegoService";
-import { EliminarJuego } from "../../Services/VideoJuegoService";
+import { EditarJuego, EliminarJuego } from "../../Services/VideoJuegoService";
 
 function ModalGame({ selectedGame, setSelectedGame }) {
   const [editando, setEditando] = useState(false);
@@ -38,8 +37,7 @@ function ModalGame({ selectedGame, setSelectedGame }) {
       plataformas,
     };
 
-    const { data, error } = await EditarJuego(selectedGame.id, datosActualizados);
-
+    const { error } = await EditarJuego(selectedGame.id, datosActualizados);
     setGuardando(false);
 
     if (error) {
@@ -60,147 +58,136 @@ function ModalGame({ selectedGame, setSelectedGame }) {
     setEditando(false);
   };
 
+  const Eliminar = async (e) => {
+    e.preventDefault();
 
-  const Eliminar = async(e) => {
-    e.preventDefault()
-
-    const { data, error } = await EliminarJuego(selectedGame.id)
+    const { error } = await EliminarJuego(selectedGame.id);
     if (error) {
       alert("Hubo un error al eliminar el juego");
       return;
-    }else{
-      alert("Juego eliminado correctamente")
-      window.location.reload();
     }
-    
-  }
+
+    alert("Juego eliminado correctamente");
+    window.location.reload();
+  };
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-6 backdrop-blur-md"
-      onClick={() => setSelectedGame(null)}
-    >
+    <div className="app-backdrop" onClick={() => setSelectedGame(null)}>
       <div
-        className="relative w-full max-w-3xl rounded-[2rem] border border-white/10 bg-gradient-to-b from-zinc-900 to-background-dark p-8"
+        className="app-panel relative w-full max-w-4xl overflow-hidden p-0"
         onClick={(e) => e.stopPropagation()}
       >
-        <button
-          type="button"
-          className="absolute right-4 top-4 h-11 w-11 rounded-full bg-white/10 text-xl text-white transition hover:bg-white/20"
-          onClick={() => setSelectedGame(null)}
+        <div
+          className="relative min-h-[240px] border-b border-[#33251c] bg-cover bg-center"
+          style={{ backgroundImage: `url(${selectedGame.imagen})` }}
         >
-          ×
-        </button>
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,6,5,0.22)_0%,rgba(8,6,5,0.76)_80%,rgba(8,6,5,0.94)_100%)]" />
+          <button
+            type="button"
+            className="app-button-secondary absolute right-5 top-5 z-20 h-11 w-11 rounded-full px-0 text-xl"
+            onClick={() => setSelectedGame(null)}
+          >
+            ×
+          </button>
 
-        <span className="text-xs uppercase tracking-[0.28em] text-primary">
-          Información detallada
-        </span>
-
-        {editando ? (
-          <input
-            type="text"
-            value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
-            className="mt-4 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-3xl font-black tracking-tight text-white outline-none"
-          />
-        ) : (
-          <h3 className="mt-4 text-4xl font-black tracking-tight">
-            {selectedGame.nombre}
-          </h3>
-        )}
-
-        <div className="mt-3">
-          {editando ? (
-            <input
-              type="text"
-              value={genero}
-              onChange={(e) => setGenero(e.target.value)}
-              className="w-full rounded-xl border border-primary/20 bg-primary/10 px-4 py-3 text-xs font-bold uppercase tracking-[0.16em] text-primary outline-none"
-            />
-          ) : (
-            <span className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-primary">
-              {selectedGame.Genero}
-            </span>
-          )}
-        </div>
-
-        <div className="mt-8 grid gap-8 md:grid-cols-2">
-          <div>
-            <h4 className="text-lg font-black text-primary">
-              ¿De qué trata?
-            </h4>
-
-            {editando ? (
-              <textarea
-                value={descripcion}
-                onChange={(e) => setDescripcion(e.target.value)}
-                rows={6}
-                className="mt-3 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-slate-300 outline-none"
-              />
-            ) : (
-              <p className="mt-3 leading-8 text-slate-300">
-                {selectedGame.descripcion}
-              </p>
-            )}
-          </div>
-
-          <div>
-            <h4 className="text-lg font-black text-primary">
-              Plataformas
-            </h4>
+          <div className="relative flex min-h-[240px] flex-col justify-end p-8">
+            <span className="app-kicker">Informacion detallada</span>
 
             {editando ? (
               <input
                 type="text"
-                value={plataformas}
-                onChange={(e) => setPlataformas(e.target.value)}
-                className="mt-3 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-slate-300 outline-none"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+                className="app-input mt-4 max-w-2xl text-3xl font-light"
               />
             ) : (
-              <p className="mt-3 leading-8 text-slate-300">
-                {selectedGame.plataformas}
-              </p>
+              <h3 className="app-title mt-4 max-w-3xl text-4xl md:text-5xl">{selectedGame.nombre}</h3>
             )}
+
+            <div className="mt-4">
+              {editando ? (
+                <input
+                  type="text"
+                  value={genero}
+                  onChange={(e) => setGenero(e.target.value)}
+                  className="app-input max-w-sm text-xs font-semibold uppercase tracking-[0.18em]"
+                />
+              ) : (
+                <span className="app-pill">{selectedGame.Genero}</span>
+              )}
+            </div>
           </div>
         </div>
 
-        <div className="mt-8 flex flex-wrap gap-3">
-          {editando ? (
-            <>
-              <button
-                type="button"
-                onClick={guardarCambios}
-                disabled={guardando}
-                className="rounded-xl bg-primary px-5 py-3 font-bold text-black transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70"
-              >
-                {guardando ? "Guardando..." : "Guardar cambios"}
-              </button>
+        <div className="grid gap-8 p-8 md:grid-cols-[1.2fr_0.8fr]">
+          <div>
+            <h4 className="app-kicker">Descripcion</h4>
+            {editando ? (
+              <textarea
+                value={descripcion}
+                onChange={(e) => setDescripcion(e.target.value)}
+                rows={7}
+                className="app-textarea mt-3"
+              />
+            ) : (
+              <p className="mt-4 text-[15px] leading-8 text-[#d3c2b0]">{selectedGame.descripcion}</p>
+            )}
+          </div>
 
-              <button
-                type="button"
-                onClick={cancelarEdicion}
-                className="rounded-xl border border-white/10 bg-white/5 px-5 py-3 font-bold text-white transition hover:bg-white/10"
-              >
-                Cancelar
-              </button>
-            </>
-          ) : (
-            <>
-            <button
-              type="button"
-              onClick={() => setEditando(true)}
-              className="rounded-xl bg-primary px-5 py-3 font-bold text-black transition hover:opacity-90"
-            >
-              Editar
-            </button>
-            <button type="button" className="rounded-xl bg-primary px-5 py-3 font-bold text-black transition hover:opacity-90" onClick={Eliminar}>
-                Eliminar
-            </button>
-            </>
-            
-            
-          )}
+          <div className="space-y-6">
+            <div className="app-panel-soft p-5">
+              <h4 className="app-kicker">Plataformas</h4>
+              {editando ? (
+                <input
+                  type="text"
+                  value={plataformas}
+                  onChange={(e) => setPlataformas(e.target.value)}
+                  className="app-input mt-3"
+                />
+              ) : (
+                <p className="mt-4 text-sm leading-7 text-[#d3c2b0]">{selectedGame.plataformas}</p>
+              )}
+            </div>
 
+            <div className="app-panel-soft p-5">
+              <h4 className="app-kicker">Acciones</h4>
+              <div className="mt-4 flex flex-wrap gap-3">
+                {editando ? (
+                  <>
+                    <button
+                      type="button"
+                      onClick={guardarCambios}
+                      disabled={guardando}
+                      className="app-button-primary disabled:cursor-not-allowed disabled:opacity-70"
+                    >
+                      {guardando ? "Guardando..." : "Guardar cambios"}
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={cancelarEdicion}
+                      className="app-button-secondary"
+                    >
+                      Cancelar
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => setEditando(true)}
+                      className="app-button-primary"
+                    >
+                      Editar
+                    </button>
+                    <button type="button" className="app-button-secondary" onClick={Eliminar}>
+                      Eliminar
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

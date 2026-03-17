@@ -1,136 +1,122 @@
-    import React from "react";
-    import { useState } from "react";
-    import { Registrar } from "../Services/AuthService";
-    // import './index.css'
+import { useState } from "react";
+import { Registrar } from "../Services/AuthService";
 
-    function Register() {
+function Register() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [nombre, setNombre] = useState("");
 
-        const [email, setEmail] = useState("")
-        const [password, setPassword] = useState("")
-        const [nombre, setNombre] = useState("")
-        const Registro = async (e) =>{
-            e.preventDefault(); //funcion necesaria para que el form ejecute de manera correcta la funcion, ya que hace que no se recargue la pagina luego de enviar el formulario
-            const{data,error} = await Registrar(email,password,nombre)
-            
-            if (error) {
-                alert(error.message);
-            } else {
-                alert("exitoso");
-                window.location.reload();
-            }
-        };
+  const Registro = async (e) => {
+    e.preventDefault();
+    const { error } = await Registrar(email, password, nombre);
 
-    return (
-    
-        <div className="font-display bg-background-dark text-slate-100 flex items-center justify-center min-h-screen p-4 relative">
-
-            <div className="w-full max-w-[440px]">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -z-10"></div>
-                {/*header */}
-                <div className="glass-panel p-8 md:p-12 rounded-xl shadow-2xl">
-                    <div className="mb-10 text-center">
-                        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-6">
-                            <span className="material-symbols-outlined text-primary text-3xl " style={{fontSize: '30px'}}>lock_open</span>
-                        </div>
-                        <h1 className="text-3xl font-bold tracking-tight text-slate-100 mb-2">
-                            Crear cuenta
-                        </h1>
-                        
-
-                    </div>
-
-
-                    {/* Form Section */}
-                    <form className="space-y-6" onSubmit={Registro}>
-                        <div className="space-y-2">
-                            <label className="text-xs font-semibold uppercase tracking-widest text-slate-400 ml-1">
-                                Full Name
-                            </label>
-
-                            <div className="relative group">
-                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                    <span className="material-symbols-outlined text-slate-500 group-focus-within:text-primary transition-colors text-xl">
-                                        person
-                                    </span>
-                                </div>
-
-                                <input
-                                    className="block w-full pl-11 pr-4 py-4 bg-slate-900/50 border border-slate-800 rounded-lg text-slate-100 placeholder:text-slate-600 focus:outline-none focus:ring-1 focus:ring-primary/50 focus:border-primary transition-all duration-300"
-                                    placeholder="Samuel Parra Cadavid"
-                                    type="text"
-                                    onChange={(e)=> setNombre(e.target.value)}
-                                />
-                            
-                            </div>
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-xs font-semibold uppercase tracking-widest text-slate-400 ml-1">
-                                    Correo
-                            </label>
-
-                            <div className="relative group">
-                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                    <span className="material-symbols-outlined text-slate-500 group-focus-within:text-primary transition-colors text-xl">
-                                        mail
-                                    </span>
-                                </div>
-
-                                <input
-                                    className="block w-full pl-11 pr-4 py-4 bg-slate-900/50 border border-slate-800 rounded-lg text-slate-100 placeholder:text-slate-600 focus:outline-none focus:ring-1 focus:ring-primary/50 focus:border-primary transition-all duration-300"
-                                    placeholder="Samuel@gmail.com"
-                                    type="text"
-                                    onChange={(e)=> setEmail(e.target.value)}
-                                />
-                            
-                            </div>
-
-                        </div>
-
-                        <div className="space-y-2">
-                            <label className="text-xs font-semibold uppercase tracking-widest text-slate-400 ml-1">
-                                    Contraseña
-                            </label>
-
-                            <div className="relative group">
-                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                    <span className="material-symbols-outlined text-slate-500 group-focus-within:text-primary transition-colors text-xl">
-                                        key
-                                    </span>
-                                </div>
-
-                                <input
-                                    className="block w-full pl-11 pr-4 py-4 bg-slate-900/50 border border-slate-800 rounded-lg text-slate-100 placeholder:text-slate-600 focus:outline-none focus:ring-1 focus:ring-primary/50 focus:border-primary transition-all duration-300"
-                                    placeholder="••••••••"
-                                    type="password"
-                                    onChange={(e)=> setPassword(e.target.value)}
-                                />
-                            
-                            </div>
-
-                        </div>
-
-                    
-                        <button className="w-full bg-primary hover:bg-primary/90 text-background-dark font-bold py-4 px-6 rounded-lg transition-all transform active:scale-[0.98] shadow-lg shadow-primary/20 mt-4"
-                            type="submit">
-                                Registrar
-                            
-                        </button>
-
-                        <div className="mt-10 text-center">
-                            <p className="text-slate-500 text-sm">
-                                Existe alguna Cuenta?
-                                <a className="text-primary font-medium hover:underline ml-1" href="/Login">
-                                    Inicia Sesion
-                                </a>
-                            </p>
-                        </div>
-                        
-
-                    </form>
-                </div>
-            </div>
-        </div>
-    );
+    if (error) {
+      alert(error.message);
+    } else {
+      alert("exitoso");
+      window.location.reload();
     }
+  };
 
-    export default Register;
+  return (
+    <main className="app-shell flex items-center justify-center px-4 py-10">
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_22%,rgba(137,85,40,0.16),transparent_18%),radial-gradient(circle_at_84%_18%,rgba(234,211,172,0.08),transparent_14%),linear-gradient(180deg,rgba(9,6,4,0)_0%,rgba(9,6,4,0.28)_100%)]" />
+
+      <section className="grid w-full max-w-[1120px] gap-8 lg:grid-cols-[0.8fr_1fr]">
+        <div className="app-panel hidden min-h-[680px] flex-col justify-between p-8 lg:flex">
+          <div>
+            <span className="app-kicker">Crear cuenta</span>
+            <h1 className="app-title mt-5 text-[56px] leading-[0.95] tracking-[-0.05em]">
+              Suma otro perfil a una interfaz ya unificada.
+            </h1>
+            <p className="app-copy mt-5 max-w-lg text-[15px] leading-8">
+              El registro ahora comparte la misma paleta calida, superficies
+              oscuras y profundidad visual del resto del proyecto.
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            <div className="app-panel-soft p-5">
+              <span className="app-kicker">Identidad visual</span>
+              <p className="mt-3 text-sm leading-7 text-[#b9a18a]">
+                Fondo mas moderno, contrastes coherentes y componentes reutilizables.
+              </p>
+            </div>
+            <div className="app-panel-soft p-5">
+              <span className="app-kicker">Escalable</span>
+              <p className="mt-3 text-sm leading-7 text-[#b9a18a]">
+                La misma base sirve para auth, landing, panel y modales.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="app-panel p-8 md:p-10">
+          <div className="mb-8">
+            <span className="app-kicker">Registro</span>
+            <h2 className="app-title mt-4 text-4xl">Crear cuenta</h2>
+            <p className="app-copy mt-3 text-sm leading-7">
+              Completa los datos para acceder al catalogo y sus herramientas.
+            </p>
+          </div>
+
+          <form className="space-y-5" onSubmit={Registro}>
+            <div>
+              <label className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.22em] text-[#b8a38d]">
+                Nombre
+              </label>
+              <input
+                className="app-input"
+                placeholder="Tu nombre completo"
+                type="text"
+                onChange={(e) => setNombre(e.target.value)}
+              />
+            </div>
+
+            <div>
+              <label className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.22em] text-[#b8a38d]">
+                Correo
+              </label>
+              <input
+                className="app-input"
+                placeholder="usuario@correo.com"
+                type="email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+
+            <div>
+              <label className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.22em] text-[#b8a38d]">
+                Contrasena
+              </label>
+              <input
+                className="app-input"
+                placeholder="••••••••"
+                type="password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+
+            <button className="app-button-primary mt-3 w-full" type="submit">
+              Registrar
+            </button>
+          </form>
+
+          <div className="mt-8 flex flex-wrap items-center justify-between gap-3 text-sm text-[#9d8770]">
+            <a className="transition hover:text-[#f2dfbf]" href="/">
+              Volver al inicio
+            </a>
+            <p>
+              Ya tienes cuenta?
+              <a className="ml-1 text-[#ead3ac] transition hover:text-[#f2dfbf]" href="/Login">
+                Inicia sesion
+              </a>
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+export default Register;

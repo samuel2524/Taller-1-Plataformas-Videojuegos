@@ -1,117 +1,112 @@
-import { Loguear } from "../Services/AuthService";
-import { use, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Loguear } from "../Services/AuthService";
 
-function Login(){
+function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-    const [email,setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const navigate = useNavigate();
+  const InicioSesion = async (e) => {
+    e.preventDefault();
 
-    const InicioSesion = async (e) =>{
-        e.preventDefault()
+    const { error } = await Loguear(email, password);
 
-        const {data,error} = await Loguear(email,password)
-
-        if (error) {
-            alert(error.message);
-        }else{
-            alert("Login exitoso");
-            navigate('/PaginaPrincipal');
-        }
-
-
+    if (error) {
+      alert(error.message);
+    } else {
+      alert("Login exitoso");
+      navigate("/PaginaPrincipal");
     }
+  };
 
+  return (
+    <main className="app-shell flex items-center justify-center px-4 py-10">
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_20%_25%,rgba(137,85,40,0.16),transparent_18%),radial-gradient(circle_at_82%_22%,rgba(234,211,172,0.07),transparent_16%),linear-gradient(180deg,rgba(9,6,4,0)_0%,rgba(9,6,4,0.3)_100%)]" />
 
-    return(
-    <div className="font-display bg-background-dark text-slate-100 flex items-center justify-center min-h-screen p-4 relative">
+      <section className="grid w-full max-w-[1120px] gap-8 lg:grid-cols-[0.95fr_0.75fr]">
+        <div className="app-panel hidden min-h-[640px] flex-col justify-between p-8 lg:flex">
+          <div>
+            <span className="app-kicker">Acceso al catalogo</span>
+            <h1 className="app-title mt-5 max-w-lg text-[58px] leading-[0.95] tracking-[-0.05em]">
+              Entra al panel con la misma atmosfera del catalogo principal.
+            </h1>
+            <p className="app-copy mt-5 max-w-xl text-[15px] leading-8">
+              Administra juegos, explora categorias y trabaja sobre una interfaz
+              consistente, oscura y mas actual.
+            </p>
+          </div>
 
-        <div className="w-full max-w-[440px]">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -z-10"></div>
-            {/*header */}
-            <div className="glass-panel p-8 md:p-12 rounded-xl shadow-2xl">
-                <div className="mb-10 text-center">
-                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-6">
-                        <span className="material-symbols-outlined text-primary text-3xl " style={{fontSize: '30px'}}>lock_open</span>
-                    </div>
-                    <h1 className="text-3xl font-bold tracking-tight text-slate-100 mb-2">
-                        Bienvenido De Vuelta
-                    </h1>
-                    
-
-                </div>
-
-
-                {/* Form Section */}
-                <form className="space-y-6" onSubmit={InicioSesion}>
-                    <div className="space-y-2">
-                        <label className="text-xs font-semibold uppercase tracking-widest text-slate-400 ml-1">
-                            Correo
-                            
-                        </label>
-
-                        <div className="relative group">
-                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <span className="material-symbols-outlined text-slate-500 group-focus-within:text-primary transition-colors text-xl">
-                                    Email
-                                </span>
-                            </div>
-
-                            <input
-                                className="block w-full pl-11 pr-4 py-4 bg-slate-900/50 border border-slate-800 rounded-lg text-slate-100 placeholder:text-slate-600 focus:outline-none focus:ring-1 focus:ring-primary/50 focus:border-primary transition-all duration-300"
-                                placeholder="Samuel Parra Cadavid"
-                                type="text"
-                                onChange={(e)=> setEmail(e.target.value)}
-                            />
-                        
-                        </div>
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-xs font-semibold uppercase tracking-widest text-slate-400 ml-1">
-                                Contraseña
-                        </label>
-
-                        <div className="relative group">
-                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <span className="material-symbols-outlined text-slate-500 group-focus-within:text-primary transition-colors text-xl">
-                                    key
-                                  </span>
-                            </div>
-
-                            <input
-                                className="block w-full pl-11 pr-4 py-4 bg-slate-900/50 border border-slate-800 rounded-lg text-slate-100 placeholder:text-slate-600 focus:outline-none focus:ring-1 focus:ring-primary/50 focus:border-primary transition-all duration-300"
-                                placeholder="••••••••"
-                                type="password"
-                                onChange={(e)=> setPassword(e.target.value)}
-                            />
-                        
-                        </div>
-
-                    </div>
-
-                   
-                    <button className="w-full bg-primary hover:bg-primary/90 text-background-dark font-bold py-4 px-6 rounded-lg transition-all transform active:scale-[0.98] shadow-lg shadow-primary/20 mt-4"
-                        type="submit"
-                        >
-                            Iniciar Sesion
-                    </button>
-
-                    <div className="mt-10 text-center">
-                        <p className="text-slate-500 text-sm">
-                            No tienes cuenta?
-                            <a className="text-primary font-medium hover:underline ml-1" href="/Register">
-                                Registrate
-                            </a>
-                        </p>
-                    </div>
-                    
-
-                </form>
+          <div className="grid gap-4 md:grid-cols-3">
+            <div className="app-panel-soft p-5">
+              <p className="text-[28px] font-semibold text-[#f6efe4]">Catalogo</p>
+              <p className="mt-2 text-sm text-[#aa957f]">Busqueda, destacado y carruseles.</p>
             </div>
+            <div className="app-panel-soft p-5">
+              <p className="text-[28px] font-semibold text-[#f6efe4]">CRUD</p>
+              <p className="mt-2 text-sm text-[#aa957f]">Crear, editar y eliminar juegos.</p>
+            </div>
+            <div className="app-panel-soft p-5">
+              <p className="text-[28px] font-semibold text-[#f6efe4]">Sesion</p>
+              <p className="mt-2 text-sm text-[#aa957f]">Acceso con Supabase.</p>
+            </div>
+          </div>
         </div>
-    </div>
-    );
+
+        <div className="app-panel w-full p-8 md:p-10">
+          <div className="mb-8">
+            <span className="app-kicker">Iniciar sesion</span>
+            <h2 className="app-title mt-4 text-4xl">Bienvenido de vuelta</h2>
+            <p className="app-copy mt-3 text-sm leading-7">
+              Accede al panel para continuar gestionando el catalogo.
+            </p>
+          </div>
+
+          <form className="space-y-5" onSubmit={InicioSesion}>
+            <div>
+              <label className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.22em] text-[#b8a38d]">
+                Correo
+              </label>
+              <input
+                className="app-input"
+                placeholder="usuario@correo.com"
+                type="email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+
+            <div>
+              <label className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.22em] text-[#b8a38d]">
+                Contrasena
+              </label>
+              <input
+                className="app-input"
+                placeholder="••••••••"
+                type="password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+
+            <button className="app-button-primary mt-3 w-full" type="submit">
+              Iniciar sesion
+            </button>
+          </form>
+
+          <div className="mt-8 flex flex-wrap items-center justify-between gap-3 text-sm text-[#9d8770]">
+            <a className="transition hover:text-[#f2dfbf]" href="/">
+              Volver al inicio
+            </a>
+            <p>
+              No tienes cuenta?
+              <a className="ml-1 text-[#ead3ac] transition hover:text-[#f2dfbf]" href="/Register">
+                Registrate
+              </a>
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
 }
 
 export default Login;
