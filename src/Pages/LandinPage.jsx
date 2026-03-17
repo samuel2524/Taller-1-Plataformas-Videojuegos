@@ -109,13 +109,28 @@ function LandinPage() {
             seria, moderna y visualmente fuerte.
           </p>
 
-          <div className="mt-8">
+          <div className="flex mt-6 gap-6">
             <a
               href="#destacados"
               className="inline-block rounded-full bg-primary px-6 py-3 font-bold text-background-dark shadow-[0_12px_30px_rgba(208,187,149,0.28)] transition hover:-translate-y-0.5"
             >
               Explorar juegos
             </a>
+
+             <a
+              href="/Login"
+              className="inline-block rounded-full bg-primary px-6 py-3 font-bold text-background-dark shadow-[0_12px_30px_rgba(208,187,149,0.28)] transition hover:-translate-y-0.5"
+            >
+              Iniciar Sesion
+            </a>
+
+              <a
+              href="/Register"
+              className="inline-block rounded-full bg-primary px-6 py-3 font-bold text-background-dark shadow-[0_12px_30px_rgba(208,187,149,0.28)] transition hover:-translate-y-0.5"
+            >
+              Registrate
+            </a>
+            
           </div>
 
           <div className="mt-10 grid max-w-4xl grid-cols-1 gap-4 md:grid-cols-3">
