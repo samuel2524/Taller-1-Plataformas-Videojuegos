@@ -5,6 +5,8 @@ import './index.css'
 import Register from './Pages/Register'
 import Login from './Pages/Login';
 import Principal from './Pages/PaginaPrincipal';
+import LandinPage from './Pages/LandinPage';
+
 
 
 function App() {
@@ -16,8 +18,10 @@ function App() {
         <Route path='/PaginaPrincipal' element = {<Principal></Principal>}/>
         <Route path='/Register' element={<Register></Register>}/>
         <Route path='/Login' element={<Login></Login>}/>
+        <Route path='/' element={<LandinPage></LandinPage>}/>
       </Routes>
     </BrowserRouter>
+  
 
   );
 }

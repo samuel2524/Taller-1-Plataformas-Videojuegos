@@ -7,16 +7,15 @@
 
         const [email, setEmail] = useState("")
         const [password, setPassword] = useState("")
-        const[nombre, setNombre] = useState("")
-
+        const [nombre, setNombre] = useState("")
         const Registro = async (e) =>{
             e.preventDefault(); //funcion necesaria para que el form ejecute de manera correcta la funcion, ya que hace que no se recargue la pagina luego de enviar el formulario
             const{data,error} = await Registrar(email,password,nombre)
-    
+            
             if (error) {
                 alert(error.message);
             } else {
-                alert("Registro exitoso");
+                alert("exitoso");
                 window.location.reload();
             }
         };

@@ -7,7 +7,7 @@ export async function Registrar(email,password,nombre){
         password,
         options: {
             data: {
-                nombre: nombre //Agregar atrivuto extra en supabase
+                nombre: nombre //Agregar atributo extra en supabase
             }
         }
     });

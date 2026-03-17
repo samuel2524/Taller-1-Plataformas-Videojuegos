@@ -3,18 +3,28 @@ import { supabase } from "../lib/supaBaseCliente";
 import { useEffect,useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Logout } from "../Services/AuthService";
+import { obtenerJuegos } from "../Services/VideoJuegoService";
+import { GuardarJuegosEnBd } from "../Services/VideoJuegoService";
 
 function Principal(){
     
     const navigate = useNavigate()
     const [nombre,setNombre] = useState("")
-    const [cargando, setCargando] = useState(true)
+    // const [cargando, setCargando] = useState(true)
 
     const UserLogout = async() =>{
         const {error} = await Logout()
         navigate ('/Login')
 
     }
+
+    const cargarJuegos = async () => {
+        console.log("ME DIERON CLICK");
+        const juegos = await obtenerJuegos();
+        console.log(juegos );
+        await GuardarJuegosEnBd(juegos);
+    };
+
 
     //reac muestra la pagina y luego ejecuta esta funcion, al ser una peticion async debe ir dentro del useEffect
     useEffect (()=>{
@@ -47,6 +57,10 @@ function Principal(){
             <h1>Has iniciado Sesion {nombre} </h1>
             <div>
                 <button onClick={UserLogout}>logout</button>
+                
+            </div>
+            <div>
+                <button type="button" className="bg-amber-300" onClick={cargarJuegos}>cargar a la bd</button>
             </div>
             
         </div>
