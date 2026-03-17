@@ -1,4 +1,4 @@
-function GameCard({ game, onSelect }) {
+function LandingGameCard({ game, onSelect }) {
   return (
     <article
       className="relative min-h-[420px] overflow-hidden rounded-[1.8rem] border border-white/10 shadow-[0_18px_40px_rgba(0,0,0,0.32)]"
@@ -38,4 +38,4 @@ function GameCard({ game, onSelect }) {
   );
 }
 
-export default GameCard;
+export default LandingGameCard;

@@ -53,7 +53,6 @@ export async function GuardarJuegosEnBd(juegos) {
         
         }))
 
-        console.log("JUEGOS TRANSFORMADOS:", juegosTransformados);
 
        const {data, error} = await supabase
         .from("Videojuegos")
@@ -83,8 +82,6 @@ export async function LeerVideojuegos() {
     let { data, error } = await supabase
       .from('Videojuegos')
       .select('*')
-
-    console.log(data)
     
     return {data}
     
@@ -93,4 +90,66 @@ export async function LeerVideojuegos() {
     return null;
   }
   
+}
+
+export async function CrearJuego(Nombre,descripcion,plataformas,genero) {
+
+  try {
+
+  const { data, error } = await supabase
+      .from("Videojuegos")
+      .insert([
+        {
+          nombre: Nombre,
+          descripcion: descripcion,
+          plataformas: plataformas,
+          Genero: genero,
+          imagen: ""
+        },
+      ])
+      .select();
+
+      console.log(data)
+      console.log(error)
+
+      return {data};
+    
+  } catch (error) {
+    console.error("Error en CrearJuego ", error)
+  }
+  
+}
+
+export async function EditarJuego(id, datos) {
+  try {
+    const { data, error } = await supabase
+      .from("Videojuegos")
+      .update(datos)
+      .eq("id", id);
+
+    return { data, error };
+  } catch (error) {
+    console.error("Error editando juego:", error);
+  }
+
+}
+
+
+export async function EliminarJuego(id) {
+  try {
+    const { error } = await supabase
+      .from("Videojuegos")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      console.error("Error eliminando juego:", error);
+      return { ok: false, error };
+    }
+
+    return { ok: true, error: null };
+  } catch (error) {
+    console.error("Error en EliminarJuego:", error);
+    return { ok: false, error };
+  }
 }

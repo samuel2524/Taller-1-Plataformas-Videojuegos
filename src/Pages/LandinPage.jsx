@@ -5,9 +5,9 @@ import rpg from "../assets/rpg.jpg"
 import sandbox from "../assets/sandbox.jpg"
 import multijugador from "../assets/multijugador.jpg"
 import shooter from "../assets/shooter.jpg"
-import GameCard from "../Components/GameCard";
+import LandingGameCard from "../Components/Cards/LandingGameCard";
 import { LeerVideojuegos } from "../Services/VideoJuegoService";
-import ModalGame from "../Components/ModalGame";
+import ModalGame from "../Components/Modals/ModalGame";
 
 
 function LandinPage() {
@@ -253,7 +253,7 @@ function LandinPage() {
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
           {juegos.slice(0,9).map((juego) => ( 
-           <GameCard
+           <LandingGameCard
               key={juego.id} // para que react sea que gamecard es cada uno gamecard = 30 es gta
               game={juego}
               onSelect={setSelectedGame}
